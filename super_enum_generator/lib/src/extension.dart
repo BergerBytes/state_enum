@@ -20,7 +20,7 @@ List<String> _groupIntoWords(String text) {
 
   for (int i = 0; i < text.length; i++) {
     String char = String.fromCharCode(text.codeUnitAt(i));
-    String nextChar = (i + 1 == text.length
+    String? nextChar = (i + 1 == text.length
         ? null
         : String.fromCharCode(text.codeUnitAt(i + 1)));
 

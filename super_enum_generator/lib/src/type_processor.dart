@@ -29,19 +29,19 @@ bool isGeneric(Element element) =>
     _typeChecker(Generic).hasAnnotationOfExact(element);
 
 String dataFieldType(DartObject obj) {
-  return _genericOf(ConstantReader(obj).objectValue.type)
+  return _genericOf(ConstantReader(obj).objectValue.type)!
       .getDisplayString(withNullability: false)
       .replaceAll('Generic', 'T');
 }
 
-DartType _genericOf(DartType type) {
+DartType? _genericOf(DartType? type) {
   return type is InterfaceType && type.typeArguments.isNotEmpty
       ? type.typeArguments.first
       : null;
 }
 
-List<String> docCommentsOf(Element element) {
-  final comments = <String>[];
+List<String?> docCommentsOf(Element element) {
+  final comments = <String?>[];
   if (element.documentationComment != null) {
     comments.add(element.documentationComment);
   }
@@ -59,9 +59,9 @@ List<String> copyWithDocComment(Element element) {
   return comments;
 }
 
-List<String> patternMatchingMethodDocComment(
+List<String?> patternMatchingMethodDocComment(
     PatternMatchingMethod method, Element element) {
-  final comments = <String>[];
+  final comments = <String?>[];
   if (method != null && element != null) {
     comments.add({
       PatternMatchingMethod.when:
@@ -81,25 +81,25 @@ List<String> patternMatchingMethodDocComment(
   return comments;
 }
 
-DartObject usedClassFromAnnotation(FieldElement field) {
+DartObject? usedClassFromAnnotation(FieldElement field) {
   final annotation =
       TypeChecker.fromRuntime(UseClass).firstAnnotationOfExact(field);
   if (annotation == null) return null;
-  final DartObject usedClass = annotation.getField('type');
+  final DartObject? usedClass = annotation.getField('type');
   return usedClass;
 }
 
-String usedWrapperNameFromAnnotation(FieldElement field) {
+String? usedWrapperNameFromAnnotation(FieldElement field) {
   final annotation =
       TypeChecker.fromRuntime(UseClass).firstAnnotationOfExact(field);
   if (annotation == null) return null;
-  final DartObject usedClass = annotation.getField('name');
+  final DartObject? usedClass = annotation.getField('name');
   return usedClass?.toStringValue() ?? _defaultWrapper(field);
 }
 
 String _defaultWrapper(FieldElement field) {
-  final usedClass = usedClassFromAnnotation(field);
+  final usedClass = usedClassFromAnnotation(field)!;
   final usedClassType =
-      usedClass.toTypeValue().getDisplayString(withNullability: false);
+      usedClass.toTypeValue()!.getDisplayString(withNullability: false);
   return '${usedClassType}Wrapper';
 }

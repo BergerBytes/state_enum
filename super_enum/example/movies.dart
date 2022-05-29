@@ -1,10 +1,10 @@
 import 'package:super_enum/super_enum.dart';
 
 class Movies extends Equatable {
-  final int page;
-  final int totalResults;
-  final int totalPages;
-  final List<Movie> results;
+  final int? page;
+  final int? totalResults;
+  final int? totalPages;
+  final List<Movie>? results;
 
   const Movies({this.page, this.totalResults, this.totalPages, this.results});
 
@@ -12,7 +12,7 @@ class Movies extends Equatable {
         page: json['page'],
         totalResults: json['total_results'],
         totalPages: json['total_pages'],
-        results: (json['results'] as List)
+        results: (json['results'] as List?)
                 ?.map((v) => Movie.fromJson(v))
                 ?.toList() ??
             [],
@@ -24,7 +24,7 @@ class Movies extends Equatable {
     data['total_results'] = this.totalResults;
     data['total_pages'] = this.totalPages;
     if (this.results != null) {
-      data['results'] = this.results.map((v) => v.toJson()).toList();
+      data['results'] = this.results!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -39,20 +39,20 @@ class Movies extends Equatable {
 }
 
 class Movie extends Equatable {
-  final int voteCount;
-  final int id;
-  final bool video;
+  final int? voteCount;
+  final int? id;
+  final bool? video;
   final voteAverage;
-  final String title;
-  final double popularity;
-  final String posterPath;
-  final String originalLanguage;
-  final String originalTitle;
-  final List<int> genreIds;
-  final String backdropPath;
-  final bool adult;
-  final String overview;
-  final String releaseDate;
+  final String? title;
+  final double? popularity;
+  final String? posterPath;
+  final String? originalLanguage;
+  final String? originalTitle;
+  final List<int>? genreIds;
+  final String? backdropPath;
+  final bool? adult;
+  final String? overview;
+  final String? releaseDate;
 
   Movie(
       {this.voteCount,

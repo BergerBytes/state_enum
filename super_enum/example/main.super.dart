@@ -29,11 +29,11 @@ abstract class MoviesResponse extends Equatable {
 
   /// The [when] method is the equivalent to pattern matching.
   /// Its prototype depends on the _MoviesResponse [_type]s defined.
-  R when<R extends Object>(
-      {@required R Function(Success) success,
-      @required R Function() unauthorized,
-      @required R Function() noNetwork,
-      @required R Function(UnexpectedException) unexpectedException}) {
+  R when<R extends Object?>(
+      {required R Function(Success) success,
+      required R Function() unauthorized,
+      required R Function() noNetwork,
+      required R Function(UnexpectedException) unexpectedException}) {
     assert(() {
       if (success == null ||
           unauthorized == null ||
@@ -61,11 +61,11 @@ abstract class MoviesResponse extends Equatable {
   /// On the other hand, it adds an extra orElse required parameter,
   /// for fallback behavior.
   R whenOrElse<R extends Object>(
-      {R Function(Success) success,
-      R Function() unauthorized,
-      R Function() noNetwork,
-      R Function(UnexpectedException) unexpectedException,
-      @required R Function(MoviesResponse) orElse}) {
+      {R Function(Success)? success,
+      R Function()? unauthorized,
+      R Function()? noNetwork,
+      R Function(UnexpectedException)? unexpectedException,
+      required R Function(MoviesResponse) orElse}) {
     assert(() {
       if (orElse == null) {
         throw 'Missing orElse case';
@@ -92,10 +92,10 @@ abstract class MoviesResponse extends Equatable {
   /// The [whenPartial] method is equivalent to [whenOrElse],
   /// but non-exhaustive.
   void whenPartial(
-      {void Function(Success) success,
-      void Function() unauthorized,
-      void Function() noNetwork,
-      void Function(UnexpectedException) unexpectedException}) {
+      {void Function(Success)? success,
+      void Function()? unauthorized,
+      void Function()? noNetwork,
+      void Function(UnexpectedException)? unexpectedException}) {
     assert(() {
       if (success == null &&
           unauthorized == null &&
@@ -122,39 +122,39 @@ abstract class MoviesResponse extends Equatable {
   }
 
   @override
-  List<Object> get props => const [];
+  List<Object?> get props => const [];
 }
 
 /// Success State of the MovieResponse
 @immutable
 abstract class Success extends MoviesResponse {
-  const Success({@required this.movies}) : super(_MoviesResponse.Success);
+  const Success({required this.movies}) : super(_MoviesResponse.Success);
 
   /// Success State of the MovieResponse
   factory Success.create({@required Movies movies}) = _SuccessImpl;
 
-  final Movies movies;
+  final Movies? movies;
 
   /// Creates a copy of this Success but with the given fields
   /// replaced with the new values.
-  Success copyWith({Movies movies});
+  Success copyWith({Movies? movies});
 }
 
 @immutable
 class _SuccessImpl extends Success {
-  const _SuccessImpl({@required this.movies}) : super(movies: movies);
+  const _SuccessImpl({required this.movies}) : super(movies: movies);
 
   @override
-  final Movies movies;
+  final Movies? movies;
 
   @override
-  _SuccessImpl copyWith({Object movies = superEnum}) => _SuccessImpl(
-        movies: movies == superEnum ? this.movies : movies as Movies,
+  _SuccessImpl copyWith({Object? movies = superEnum}) => _SuccessImpl(
+        movies: movies == superEnum ? this.movies : movies as Movies?,
       );
   @override
   String toString() => 'Success(movies: ${this.movies})';
   @override
-  List<Object> get props => [movies];
+  List<Object?> get props => [movies];
 }
 
 /// Unauthorized State of the MovieResponse
@@ -194,36 +194,36 @@ class _NoNetworkImpl extends NoNetwork {
 /// UnexpectedException State of the MovieResponse
 @immutable
 abstract class UnexpectedException extends MoviesResponse {
-  const UnexpectedException({@required this.exception})
+  const UnexpectedException({required this.exception})
       : super(_MoviesResponse.UnexpectedException);
 
   /// UnexpectedException State of the MovieResponse
   factory UnexpectedException.create({@required Exception exception}) =
       _UnexpectedExceptionImpl;
 
-  final Exception exception;
+  final Exception? exception;
 
   /// Creates a copy of this UnexpectedException but with the given fields
   /// replaced with the new values.
-  UnexpectedException copyWith({Exception exception});
+  UnexpectedException copyWith({Exception? exception});
 }
 
 @immutable
 class _UnexpectedExceptionImpl extends UnexpectedException {
-  const _UnexpectedExceptionImpl({@required this.exception})
+  const _UnexpectedExceptionImpl({required this.exception})
       : super(exception: exception);
 
   @override
-  final Exception exception;
+  final Exception? exception;
 
   @override
-  _UnexpectedExceptionImpl copyWith({Object exception = superEnum}) =>
+  _UnexpectedExceptionImpl copyWith({Object? exception = superEnum}) =>
       _UnexpectedExceptionImpl(
         exception:
-            exception == superEnum ? this.exception : exception as Exception,
+            exception == superEnum ? this.exception : exception as Exception?,
       );
   @override
   String toString() => 'UnexpectedException(exception: ${this.exception})';
   @override
-  List<Object> get props => [exception];
+  List<Object?> get props => [exception];
 }

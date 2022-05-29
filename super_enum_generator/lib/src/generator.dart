@@ -24,6 +24,6 @@ class SuperEnumGenerator extends GeneratorForAnnotation<SuperEnum> {
   @override
   generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) {
-    return ClassGenerator(element).generate(DartFormatter());
+    return ClassGenerator(element as ClassElement).generate(DartFormatter());
   }
 }
